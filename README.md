@@ -1,5 +1,8 @@
+### EXERCISES LINK
+```url
 https://gist.github.com/andrescortesdev/85d96f121b02813aabce686664459b63
-
+```
+--- 
 ### Install
 ```
 npm install express mysql2 dotenv
