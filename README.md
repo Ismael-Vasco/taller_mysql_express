@@ -1,13 +1,13 @@
 https://gist.github.com/andrescortesdev/85d96f121b02813aabce686664459b63
 
-# installar
-
+### Install
 ```
 npm install express mysql2 dotenv
 ```
+Execute this commant to install express, mysql2 for connections between mysql and express, and finally dotenv to handle environment variables into our `db.js`
 
-### ejemplo de package.json
-```json
+### Exmaple of package.json looks like:
+```js
 {
   "name": "taller-express-mysql",
   "version": "1.0.0",

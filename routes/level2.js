@@ -135,9 +135,9 @@ router.get('/ejercicio-17', async (req, res) => {
         const [rows] = await pool.query(`
             SELECT 
                 DATE(o.order_date) AS fecha,
-                SUM(oi.quantity * oi.price) AS ingresos
+                SUM(op.quantity * op.price_at_purchase) AS ingresos
             FROM orders o
-            JOIN order_items oi ON oi.order_id = o.id
+            JOIN order_product op ON op.order_id = o.id
             GROUP BY DATE(o.order_date)
             ORDER BY fecha
         `);
@@ -156,8 +156,8 @@ router.get('/ejercicio-18', async (req, res) => {
             SELECT c.name AS categoria
             FROM categories c
             LEFT JOIN products p ON p.category_id = c.id
-            LEFT JOIN order_items oi ON oi.product_id = p.id
-            WHERE oi.id IS NULL
+            LEFT JOIN order_product op ON op.product_id = p.id
+            WHERE op.id IS NULL
             GROUP BY c.name
         `);
 
@@ -169,7 +169,7 @@ router.get('/ejercicio-18', async (req, res) => {
 
 
 // 19 Ticket promedio por usuario
-router.get('/ejercicio-9', async (req, res) => {
+router.get('/ejercicio-19', async (req, res) => {
     try {
         const [rows] = await pool.query(`
             SELECT 
@@ -179,9 +179,9 @@ router.get('/ejercicio-9', async (req, res) => {
                 SELECT 
                     o.id,
                     o.user_id,
-                    SUM(oi.quantity * oi.price) AS order_total
+                    SUM(op.quantity * op.price_at_purchase) AS order_total
                 FROM orders o
-                JOIN order_items oi ON oi.order_id = o.id
+                JOIN order_product op ON op.order_id = o.id
                 GROUP BY o.id
             ) AS sub
             JOIN users u ON u.id = sub.user_id
@@ -199,10 +199,10 @@ router.get('/ejercicio-9', async (req, res) => {
 router.get('/ejercicio-20', async (req, res) => {
     try {
         const [rows] = await pool.query(`
-            SELECT DISTINCT p.name AS producto
+            SELECT DISTINCT p.name AS producto, o.status AS staus
             FROM orders o
-            JOIN order_items oi ON oi.order_id = o.id
-            JOIN products p ON p.id = oi.product_id
+            JOIN order_product op ON op.order_id = o.id
+            JOIN products p ON p.id = op.product_id
             WHERE o.status = 'cancelled'
         `);
 
